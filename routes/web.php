@@ -11,6 +11,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route bantuan untuk membuat symlink di hosting
+Route::get('/linkstorage', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        return 'Symlink berhasil dibuat! Silakan cek web kamu.';
+    } catch (\Exception $e) {
+        return 'Gagal membuat symlink: ' . $e->getMessage();
+    }
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
